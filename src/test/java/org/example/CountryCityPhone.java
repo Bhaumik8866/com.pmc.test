@@ -31,18 +31,12 @@ public class CountryCityPhone {
     @Test
     public void getCountryList() {
         List<String> actualListOfCountry = Arrays.asList("Estonia", "Spain", "Austria", "");
-//        for(String s:actualListOfCountry)
-//        {
-//            System.out.println(s);
-//        }
         CountryCityPhone ccp=new CountryCityPhone();
         List<String> expectedListOfCountry= new ArrayList<>();
         expectedListOfCountry.add("");
         for(country country:country.values())
         {
             expectedListOfCountry.add(country.label);
-
-         //   System.out.println(country);
         }
 
         Collections.sort(actualListOfCountry);
@@ -50,8 +44,6 @@ public class CountryCityPhone {
         System.out.println("actual list: "+actualListOfCountry);
         System.out.println("expected list: "+expectedListOfCountry);
         Assert.assertEquals(actualListOfCountry,expectedListOfCountry);
-
-
     }
     @Test
     public void validateCitiesByCountry()
@@ -62,27 +54,17 @@ public class CountryCityPhone {
             if(c.label.equals("Austria")) {
                 List<String> actualListOfCities = Arrays.asList("Innsbruck","Salzburg","","Vienna");
                 System.out.println("actual list"+actualListOfCities);
-                // actualListOfCities.add("");
                 List<String> expectedListOfCities = new ArrayList<>();
                 expectedListOfCities.add("");
                 expectedListOfCities.addAll(1,c.cities);
                 Collections.sort(actualListOfCities);
                 Collections.sort(expectedListOfCities);
-                System.out.println("actual sorted list"+actualListOfCities);
-                System.out.println("expected sorted list"+expectedListOfCities);
+//                System.out.println("actual sorted list"+actualListOfCities);
+//                System.out.println("expected sorted list"+expectedListOfCities);
                 Assert.assertEquals(actualListOfCities,expectedListOfCities);
             }
 
-
         }
-
-//        List<String> expectedListOfCities= new ArrayList<>();
-//        expectedListOfCities.add("");
-//        for(country city:country.values())
-//        {
-//            expectedListOfCities.addAll(Collections.singleton(String.valueOf(city.cities)));
-//        }
-//        System.out.println(expectedListOfCities);
     }
     @Test
     public WebDriver invokeBrowser(BrowserName b)

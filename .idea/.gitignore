@@ -1,3 +1,15 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+/compiler.xml
+/encodings.xml
+/jarRepositories.xml
+/misc.xml
+/uiDesigner.xml
+/vcs.xml
+../src/test/java/org/example/AppTest.java
+../src/test/java/org/example/Basics.java
+../src/test/java/org/example/HashMapTest.java
+../src/test/java/org/example/multi.java
+../src/test/java/org/example/ThreadRunnable.java
+../target/
