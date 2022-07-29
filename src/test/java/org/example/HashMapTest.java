@@ -21,6 +21,9 @@ public class HashMapTest {
         for(Map.Entry m: h1.entrySet())
         {
             System.out.println(m.getKey()+" "+m.getValue());
+//            int key= (int) m.getKey();
+//            System.out.println(key);
         }
+
     }
 }
