@@ -1,5 +1,12 @@
 package org.example.streams;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import java.time.LocalDate;
@@ -12,6 +19,7 @@ import java.util.stream.Collectors;
 //find the use case of this scenario on : https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#use-case
 public class Person {
 
+    WebDriver driver;
  public enum gender{MALE,FEMALE}
 
     String name;
@@ -68,8 +76,7 @@ public class Person {
         }
     }
     @Test
-    public void main()
-    {
+    public void main() throws InterruptedException {
      HashMap<Integer,String> list=createPersonsList();
      //Approach 1: Create Methods That Search for Members That Match One Characteristic
      System.out.println("Persons older than 6:");
@@ -99,6 +106,55 @@ public class Person {
      List maplist= list.entrySet().stream().map(s->s.getValue().concat(": PMC Test "))
                      .map(e->e.toUpperCase()).collect(Collectors.toList());
      System.out.print(maplist);
+
+
     }
+    @Test
+    public void webtest() throws InterruptedException {
+        //Project
+        WebDriverManager.chromedriver().setup();
+        driver=new ChromeDriver();
+        driver.get("https://gateway-dev.carousel.eu/");
+        driver.findElement(By.xpath("//input[@name='UserName']")).sendKeys("hitesh.prajapati@pmcretail.com");
+        driver.findElement(By.xpath("//input[@name='Password']")).sendKeys("GatewayDev@2020");
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
+        Thread.sleep(3000);
+        driver.findElement(By.xpath("//a[text()='Admin']")).click();
+        Thread.sleep(2000);
+        List<WebElement> adminpages=new ArrayList<>();
+        adminpages=driver.findElements(By.xpath("//a[contains(@href,'Admin')]"));
+        long countpages=adminpages.stream().filter(e->e.isDisplayed()).count();
+        System.out.println(countpages);
+        adminpages.stream().filter(e->e.isDisplayed())
+                .map(e->e.getText()).forEach(e->System.out.println(e));
+//        List<String> pagenames= adminpages.stream().filter(e->e.isDisplayed())
+//                .map(e->e.getText()).collect(Collectors.toList());
+//        pagenames.stream().forEach(e->System.out.println());
+
+//        adminpages.stream().filter(e->e.isDisplayed())
+//                .forEach(e-> {
+//                  e.click();
+//                    try {
+//                        Thread.sleep(10000);
+//                    } catch (InterruptedException ex) {
+//                        throw new RuntimeException(ex);
+//                    }
+//                });
+
+        List<WebElement> filteredlist= adminpages.stream().filter(e->e.isDisplayed())
+                .collect(Collectors.toList());
+        filteredlist.forEach(e-> {
+            e.sendKeys(Keys.CONTROL,Keys.ENTER);
+            try {
+                Thread.sleep(5000);
+
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        driver.quit();
+    }
+
 
 }
