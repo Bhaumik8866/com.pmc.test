@@ -5,18 +5,27 @@ import com.assertthat.selenium_shutterbug.core.CaptureElement;
 import com.assertthat.selenium_shutterbug.core.Shutterbug;
 import com.github.javafaker.Faker;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.javatuples.Decade;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import java.awt.*;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
+
+@Listeners({ org.example.listener.ListenerTest.class})
 
 public class SeleniumEasy {
 
@@ -108,6 +117,8 @@ public class SeleniumEasy {
         // and use devicePixelRatio - for retina displays:
         Shutterbug.shootPage(driver, Capture.FULL_SCROLL ,500,true)
                 .withName("Full Scroll half a second scrolling timeout").save();
+
+        //Note: Take full screenshot with sticker header element
         Shutterbug.shootPage(driver,Capture.FULL,true).withName("sticky header element").save();
         driver.quit();
     }
@@ -151,5 +162,105 @@ public class SeleniumEasy {
 //        Shutterbug.shootFrame(driver, driver
 //                .findElement(By.cssSelector("frame[src='/frame_middle']")),CaptureElement.FULL_SCROLL).save();
         driver.quit();
+    }
+
+    @Test
+    public void ScrollableWebElements()
+    {
+        By WebElements=By.xpath("//table[@id='example']");
+        driver=GetWebDriverManager();
+        driver.manage().window().maximize();
+        driver.get("https://demo.seleniumeasy.com/table-data-download-demo.html");
+        Shutterbug.shootElement(driver, WebElements, CaptureElement.HORIZONTAL_SCROLL).withName("ScrollableWebElements").save();
+        driver.quit();
+    }
+
+    @Test
+    public void Operationschaining() throws InterruptedException {
+        driver=GetWebDriverManager();
+        driver.manage().window().maximize();
+        driver.get("https://demo.seleniumeasy.com/table-sort-search-demo.html");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        WebElement tablelength=driver.findElement(By.className("dataTables_length"));
+//        js.executeScript("arguments[0].setAttribute('style', 'border-style: dashed; border-color: blue')", tablelength);
+//        Thread.sleep(3000);
+
+        WebElement searchbox=driver.findElement(By.id("example_filter"));
+//        js.executeScript("arguments[0].setAttribute('style', 'border-style: dashed; border-color: blue')", searchbox);
+//        Thread.sleep(3000);
+
+        WebElement tableheader=driver.findElement(By.className("thead-inverse"));
+//        js.executeScript("arguments[0].setAttribute('style', 'border-style: dashed; border-color: blue')", tableheader);
+//        Thread.sleep(3000);
+
+        WebElement tablebody=driver.findElement(By.tagName("tbody"));
+//        js.executeScript("arguments[0].setAttribute('style', 'border-style: dashed; border-color: blue')", tablebody);
+//        Thread.sleep(3000);
+
+        WebElement logo=driver.findElement(By.className("cbt"));
+//        js.executeScript("arguments[0].setAttribute('style', 'border-style: dashed; border-color: blue')", logo);
+//        Thread.sleep(3000);
+
+        Shutterbug.shootPage(driver,Capture.FULL,true)
+                .blur(tablelength)
+                .highlight(searchbox)
+                .monochrome(logo).highlight(logo)
+                .highlightWithText(tableheader, Color.blue, 3, "Highlight Table Headers",Color.blue, new Font("SansSerif", Font.BOLD, 20))
+                .highlightWithText(tablebody, "This is table body")
+                .withTitle("Table Sort And Search - " + new Date())
+                .withName("chain operations").save();
+        driver.quit();
+    }
+
+    @Test
+    public void inputformwithfaker()
+    {
+        Faker fake=new Faker();
+        driver=GetWebDriverManager();
+        //driver.manage().window().maximize();
+        driver.get("https://demo.seleniumeasy.com/input-form-demo.html");
+        driver.findElement(By.xpath("//input[@name='first_name']")).sendKeys(fake.name().firstName());
+        driver.findElement(By.xpath("//input[@name='last_name']")).sendKeys(fake.name().lastName());
+        driver.findElement(By.xpath("//input[@name='email']")).sendKeys(fake.internet().emailAddress());
+        driver.findElement(By.xpath("//input[@name='phone']")).sendKeys(fake.phoneNumber().phoneNumber());
+        driver.findElement(By.xpath("//input[@name='address']")).sendKeys(fake.address().fullAddress());
+        driver.findElement(By.xpath("//input[@name='city']")).sendKeys(fake.address().city());
+        driver.findElement(By.xpath("//select[@name='state']")).click();
+        driver.findElement(By.xpath("//option[text()='Alaska']")).click();
+        String state=driver.findElement(By.xpath("//option[text()='Alaska']")).getText();
+        System.out.println(state);
+        driver.findElement(By.xpath("//input[@name='zip']")).sendKeys(fake.address().zipCode());
+        driver.findElement(By.xpath("//input[@name='website']")).sendKeys(fake.internet().url());
+        driver.findElement(By.xpath("//input[@value='yes']")).click();
+        driver.findElement(By.xpath("//textarea[@name='comment']")).sendKeys(fake.weather().description());
+        driver.findElement(By.xpath("//button[text()='Send ']")).click();
+        driver.quit();
+    }
+
+    @Test
+    public void fackerTest()
+    {
+        enum countryenum {USA,UK,INDIA,DUBAI,AUSTRIA}
+        Faker javafaker=new Faker();
+        Decade<String,String,String,String,String,String,String,String,String,String> names=
+                new Decade<String,String,String,String,String,String,String,String,String,String>(javafaker.name().firstName(),javafaker.name().lastName(),javafaker.name().bloodGroup(),javafaker.company().name(), javafaker.weather().temperatureCelsius(),javafaker.book().publisher(),javafaker.book().author(),javafaker.ancient().hero(),javafaker.file().fileName(),javafaker.space().meteorite());
+        //System.out.println(names);
+        //Storing tuples in a list
+        List<Object> tuples=new ArrayList<>();
+        tuples=names.toList();
+        //tuples.add(lnames);
+        tuples.stream().forEach(e->System.out.println("Tuples: "+e));
+        System.out.println(javafaker.options().nextElement(tuples));
+        System.out.println(javafaker.letterify("12AB34",true));
+        System.out.println(javafaker.bothify("12AB34"));
+
+        //Generates a String that matches the given regular expression.
+        String regex="[0-8]\\d{2}-\\d{2}-\\d{4}";
+        System.out.println(javafaker.regexify(regex));
+
+        System.out.println(javafaker.avatar());
+        System.out.println(javafaker.internet().password(6,10,true,true,true));
+        System.out.println(javafaker.internet().safeEmailAddress());
     }
 }
