@@ -7,12 +7,83 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class CountryCityPhone {
 
     WebDriver driver;
-    enum BrowserName {CHROME,FIREFOX};
+
+    @Test
+    public void getCountryList() {
+        List<String> actualListOfCountry = Arrays.asList("Estonia", "Spain", "Austria", "");
+        CountryCityPhone ccp = new CountryCityPhone();
+        List<String> expectedListOfCountry = new ArrayList<>();
+        expectedListOfCountry.add("");
+        for (country country : country.values()) {
+            expectedListOfCountry.add(country.label);
+        }
+
+        Collections.sort(actualListOfCountry);
+        Collections.sort(expectedListOfCountry);
+        System.out.println("actual list: " + actualListOfCountry);
+        System.out.println("expected list: " + expectedListOfCountry);
+        Assert.assertEquals(actualListOfCountry, expectedListOfCountry);
+    }
+
+    ;
+
+    @Test
+    public void validateCitiesByCountry() {
+
+        for (country c : country.values()) //Austria
+        {
+            if (c.label.equals("Austria")) {
+                List<String> actualListOfCities = Arrays.asList("Innsbruck", "Salzburg", "", "Vienna");
+                System.out.println("actual list" + actualListOfCities);
+                List<String> expectedListOfCities = new ArrayList<>();
+                expectedListOfCities.add("");
+                expectedListOfCities.addAll(1, c.cities);
+                Collections.sort(actualListOfCities);
+                Collections.sort(expectedListOfCities);
+//                System.out.println("actual sorted list"+actualListOfCities);
+//                System.out.println("expected sorted list"+expectedListOfCities);
+                Assert.assertEquals(actualListOfCities, expectedListOfCities);
+            }
+
+        }
+    }
+
+    @Test
+    public WebDriver invokeBrowser(BrowserName b) {
+        if (b == BrowserName.CHROME) {
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+        } else if (b == BrowserName.FIREFOX) {
+            WebDriverManager.firefoxdriver().setup();
+            driver = new FirefoxDriver();
+        }
+        return driver;
+    }
+
+    @Test
+    public void ChromeBrowser() {
+        driver = invokeBrowser(BrowserName.CHROME);
+        driver.get("https://www.google.co.in/");
+        driver.quit();
+    }
+
+    @Test
+    public void FirefoxBrowser() {
+        driver = invokeBrowser(BrowserName.FIREFOX);
+        driver.get("https://www.google.co.in/");
+        driver.quit();
+    }
+
+    enum BrowserName {CHROME, FIREFOX}
+
     enum country {
         AT("Austria", 43, Arrays.asList("Vienna", "Salzburg", "Innsbruck")),
         EE("Estonia", 372, Arrays.asList("Tallinn", "Haapsalu", "Tartu")),
@@ -26,72 +97,5 @@ public class CountryCityPhone {
             this.phonePrefixNumber = phonePrefixNumber;
             this.cities = cities;
         }
-    }
-
-    @Test
-    public void getCountryList() {
-        List<String> actualListOfCountry = Arrays.asList("Estonia", "Spain", "Austria", "");
-        CountryCityPhone ccp=new CountryCityPhone();
-        List<String> expectedListOfCountry= new ArrayList<>();
-        expectedListOfCountry.add("");
-        for(country country:country.values())
-        {
-            expectedListOfCountry.add(country.label);
-        }
-
-        Collections.sort(actualListOfCountry);
-        Collections.sort(expectedListOfCountry);
-        System.out.println("actual list: "+actualListOfCountry);
-        System.out.println("expected list: "+expectedListOfCountry);
-        Assert.assertEquals(actualListOfCountry,expectedListOfCountry);
-    }
-    @Test
-    public void validateCitiesByCountry()
-    {
-
-        for(country c: country.values()) //Austria
-        {
-            if(c.label.equals("Austria")) {
-                List<String> actualListOfCities = Arrays.asList("Innsbruck","Salzburg","","Vienna");
-                System.out.println("actual list"+actualListOfCities);
-                List<String> expectedListOfCities = new ArrayList<>();
-                expectedListOfCities.add("");
-                expectedListOfCities.addAll(1,c.cities);
-                Collections.sort(actualListOfCities);
-                Collections.sort(expectedListOfCities);
-//                System.out.println("actual sorted list"+actualListOfCities);
-//                System.out.println("expected sorted list"+expectedListOfCities);
-                Assert.assertEquals(actualListOfCities,expectedListOfCities);
-            }
-
-        }
-    }
-    @Test
-    public WebDriver invokeBrowser(BrowserName b)
-    {
-        if(b==BrowserName.CHROME)
-        {
-            WebDriverManager.chromedriver().setup();
-            driver=new ChromeDriver();
-        } else if (b==BrowserName.FIREFOX)
-        {
-            WebDriverManager.firefoxdriver().setup();
-            driver=new FirefoxDriver();
-        }
-        return driver;
-    }
-    @Test
-    public void ChromeBrowser()
-    {
-        driver=invokeBrowser(BrowserName.CHROME);
-        driver.get("https://www.google.co.in/");
-        driver.quit();
-    }
-    @Test
-    public void FirefoxBrowser()
-    {
-        driver=invokeBrowser(BrowserName.FIREFOX);
-        driver.get("https://www.google.co.in/");
-        driver.quit();
     }
 }

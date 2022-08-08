@@ -1,6 +1,9 @@
 package StepDefinition;
 
-import io.cucumber.java.en.*;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +17,7 @@ import java.util.Map;
 public class StepDefinitions {
 
     WebDriver driver;
+
     @Given("I am at login page")
     public void i_am_at_login_page() {
         // Write code here that turns the phrase above into concrete actions
@@ -40,7 +44,7 @@ public class StepDefinitions {
     @Given("I am at google page")
     public void iAmAtGooglePage() {
         WebDriverManager.chromedriver().setup();
-        driver=new ChromeDriver();
+        driver = new ChromeDriver();
         driver.get("https://www.google.co.in/");
         driver.manage().window().maximize();
 //        driver.findElement(By.xpath("//input[@name='q']")).sendKeys("google");
@@ -52,24 +56,22 @@ public class StepDefinitions {
             throw new RuntimeException(e);
         }
         //driver.findElement(By.xpath("//input[@name='btnK']")).click();
-        List<WebElement> s= driver.findElements(By.xpath("//a[@target='_top']"));
-        HashMap<String,WebElement> map= new HashMap<>();
-        for(WebElement s1:s)
-        {
-            String name=s1.getText();
+        List<WebElement> s = driver.findElements(By.xpath("//a[@target='_top']"));
+        HashMap<String, WebElement> map = new HashMap<>();
+        for (WebElement s1 : s) {
+            String name = s1.getText();
             System.out.println(name);
-            map.put(name,s1);
+            map.put(name, s1);
         }
-        for(Map.Entry m:map.entrySet())
-        {
-            System.out.println(m.getKey()+" "+m.getValue());
+        for (Map.Entry m : map.entrySet()) {
+            System.out.println(m.getKey() + " " + m.getValue());
         }
         driver.quit();
     }
 
     @When("I search for google in search")
     public void iSearchForGoogleInSearch() {
-        
+
     }
 
     @Then("Get all aifferent elements present on result page")
@@ -115,4 +117,5 @@ public class StepDefinitions {
     public void iAmOnSearchPage() {
         System.out.println("Test scenario 1: I am on search page");
     }
+
 }

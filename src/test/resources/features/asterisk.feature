@@ -1,4 +1,5 @@
 Feature: This is to demo asterisk feature
+
   Scenario: All done
     Given I am on product page
     * I have added milk

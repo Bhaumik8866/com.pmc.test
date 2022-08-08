@@ -10,10 +10,11 @@ import java.util.Random;
 public class CollectionsTest {
 
     Random random = new Random();
+
     @Test
     public void arrays() // contains basic CRUD operations on Array List interface
     {
-        List<Integer> list=new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
 
         //adding static elements in to array list by add method
         list.add(1);
@@ -30,16 +31,15 @@ public class CollectionsTest {
         System.out.println(list);
         list.stream().forEach(System.out::println);
 
-        for (int i=0;i<list.size();i++)
-        {
+        for (int i = 0; i < list.size(); i++) {
             System.out.print(list.get(i));
         }
 
         //updating element in array list
-        list.set(0,0);
+        list.set(0, 0);
         System.out.println(list);
-        System.out.println("list.size: "+list.size());
-        List<Integer> list2=new ArrayList<>();
+        System.out.println("list.size: " + list.size());
+        List<Integer> list2 = new ArrayList<>();
         list2.add(random.nextInt(10));
         list2.add(random.nextInt(10));
         list2.add(random.nextInt(10));
@@ -51,21 +51,20 @@ public class CollectionsTest {
         list2.add(random.nextInt(10));
         list2.add(random.nextInt(10));
 
-        boolean flag=list.containsAll(list2);
+        boolean flag = list.containsAll(list2);
         System.out.println(flag);
         System.out.println(list.contains(30));
         System.out.println(list.hashCode());
         System.out.println(list2.hashCode());
         System.out.println(list.isEmpty());
-        ListIterator<Integer> itr=list2.listIterator(); //retrive list of values using list iterator
-        while(itr.hasNext())
-        {
-            System.out.println("List Iterator: "+itr.next());
+        ListIterator<Integer> itr = list2.listIterator(); //retrive list of values using list iterator
+        while (itr.hasNext()) {
+            System.out.println("List Iterator: " + itr.next());
         }
         System.out.println("---------Break----------");
-        for (Integer j:list)//retrive list of values using for-each loop
+        for (Integer j : list)//retrive list of values using for-each loop
         {
-            System.out.println("For-each loop: "+j);
+            System.out.println("For-each loop: " + j);
         }
         list.addAll(list2);
         System.out.println(list);
@@ -75,7 +74,7 @@ public class CollectionsTest {
         System.out.println(list);
 
         list.clear();
-        System.out.println("list.clear: "+list);
+        System.out.println("list.clear: " + list);
 
     }
 }

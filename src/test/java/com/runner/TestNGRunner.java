@@ -6,16 +6,16 @@ import io.cucumber.testng.CucumberOptions;
 @CucumberOptions(
         plugin = {
                 "pretty",
-                "json:target/json-report/cucumber.json"
+                "html:target/json-report/cucumber.html"
 
         },
         monochrome = true,
-        features = {"src/test/resources/features/"},
+        features = {"src/test/resources/carousel/Gateway"},
         glue = {
                 "StepDefinition",
                 "com.runner"
         },
-        tags = "",
+        tags = "@WIP",
         dryRun = false
 )
 public class TestNGRunner extends AbstractTestNGCucumberTests {

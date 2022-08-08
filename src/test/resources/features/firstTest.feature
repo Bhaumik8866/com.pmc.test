@@ -1,4 +1,3 @@
-
 Feature: Demo feature
 
   Scenario: This is test only

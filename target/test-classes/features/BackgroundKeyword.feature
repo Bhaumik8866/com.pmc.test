@@ -1,4 +1,5 @@
 Feature: This is background keyword demo
+
   Background:
     Given I am on home page
 #    And I type keyword on searchbox
