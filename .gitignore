@@ -13,5 +13,4 @@
 ../src/test/java/org/example/multi.java
 ../src/test/java/org/example/ThreadRunnable.java
 ../target/
-screenshots/
 *.png
