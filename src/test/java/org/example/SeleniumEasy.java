@@ -8,7 +8,10 @@ import org.example.enums.Browser;
 import org.example.thread.ThreadLocalDriver;
 import org.javatuples.Decade;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -244,6 +247,22 @@ public class SeleniumEasy {
         String browser="Teststring" ;
         boolean flag=browser.isEmpty();
         System.out.println(flag);
+    }
+    @Test
+    public void dragAndDropSliders() throws InterruptedException {
+        JavascriptExecutor js = (JavascriptExecutor) ThreadLocalDriver.getDriver();
+        ThreadLocalDriver.getDriver().get("https://demo.seleniumeasy.com/drag-drop-range-sliders-demo.html");
+        WebElement source=ThreadLocalDriver.getDriver().findElement(By.xpath("//div[@id='slider1']/div/input"));
+        Actions act=new Actions(ThreadLocalDriver.getDriver());
+        int width = source.getSize().width;
+        int stepsize=width/100;
+        System.out.println(width);
+        //act.dragAndDropBy(source,500,0);
+        //Actions action = new Actions(driver);
+        act.clickAndHold(source);
+        act.moveByOffset(1, 0).release().build().perform();
+        Thread.sleep(5000);
+
     }
 
 }

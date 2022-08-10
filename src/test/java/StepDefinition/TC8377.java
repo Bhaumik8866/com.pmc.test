@@ -1,13 +1,6 @@
 package StepDefinition;
-
-import io.cucumber.java.After;
-import io.cucumber.java.AfterAll;
-import io.cucumber.java.Before;
-import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.*;
-import org.example.enums.Browser;
 import org.example.enums.Credentials;
-import org.example.enums.Url;
 import org.example.thread.ThreadLocalDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,8 +10,7 @@ import pageObject.CommonObjects;
 import pageObject.login;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class TC8377 {
 
