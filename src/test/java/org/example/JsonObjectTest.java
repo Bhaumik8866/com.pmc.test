@@ -80,7 +80,6 @@ public class JsonObjectTest {
     public static void main(String[] args) throws IOException {
         readJSON();
         writeJsonWithGson();
-
     }
 
 }
