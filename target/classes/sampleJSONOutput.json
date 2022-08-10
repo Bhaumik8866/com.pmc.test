@@ -1,3 +1,1 @@
-{"firstname":"Bhaumik","lastname":"Patel","age":28,
-  "address":{"streetaddress":"Plot-6, ABC","city":"XYZ","state":"DEF","postalcode":"000000"},
-  "companylist":["\"company: eBay\"","\"company: Paypal\"","\"company: Google\""]}
+{"firstname":"Bhaumik","lastname":"Patel","age":28,"address":{"streetaddress":"Plot-6, ABC","city":"XYZ","state":"DEF","postalcode":"000000"},"companylist":["\"company: eBay\"","\"company: Paypal\"","\"company: Google\""]}
